@@ -1,0 +1,21 @@
+#create a table in hive
+hive> CREATE TABLE IF NOT EXISTS mytable(
+    > id INT, first_name STRING, last_name STRING, email STRING, gender STRING) 
+    >ROW FORMAT DELIMITED
+    > FIELDS TERMINATED BY ','
+    > STORED AS TEXTFILE LOCATION '/home/maria_dev';
+   
+ #load csv into hive table
+ hive> LOAD DATA LOCAL INPATH '/home/maria_dev/MOCK_DATA.csv' OVERWRITE INTO TABLE mytable;
+ 
+ #create table in hbase with 1 column family 'emp_file'
+ #create table 'tab_name'
+ 
+ #create table linked to hbase in hivehive> CREATE EXTERNAL TABLE IF NOT EXISTS hive_hbase_table_name (id INT, first_name STRING, last_name STRING, email STRING, gender STRING)
+    > STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+    > WITH SERDEPROPERTIES("hbase.columns.mapping" = ":key,emp_file:first_name,emp_file:last_name,emp_file:email,emp_file:gender")
+    > TBLPROPERTIES("hbase.table.name" = "tab_name");
+    
+ #load data into hive table and this change should effect in hbase table too
+ INSERT INTO hive_hbase_table_name SELECT * FROM mytable;
+ 
