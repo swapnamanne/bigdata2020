@@ -8,8 +8,8 @@ hive> CREATE TABLE IF NOT EXISTS mytable(
  #load csv into hive table
  hive> LOAD DATA LOCAL INPATH '/home/maria_dev/MOCK_DATA.csv' OVERWRITE INTO TABLE mytable;
  
- #create table in hbase with 1 column family 'emp_file'
- #create table 'tab_name'
+ #create table in hbase with 1 column family 'emp_file','tab_name'
+ hbase(main):create 'tab_name','emp_file'
  
  #create table linked to hbase in hivehive> CREATE EXTERNAL TABLE IF NOT EXISTS hive_hbase_table_name (id INT, first_name STRING, last_name STRING, email STRING, gender STRING)
     > STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
